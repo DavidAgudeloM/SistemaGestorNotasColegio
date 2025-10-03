@@ -1,0 +1,8 @@
+# Java
+*.class
+/out/
+/.idea/
+*.iml
+/.project
+/.classpath
+/.settings/
