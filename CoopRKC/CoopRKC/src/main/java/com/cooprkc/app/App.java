@@ -121,7 +121,7 @@ public class App {
         );
         System.out.println("Interés aplicado a todas las cuentas de ahorro.");
     }
-
+        //Se usa Lambda -> en el método
     private static void listarSocios() {
         System.out.println("\n*** SOCIOS Y CUENTAS ***");
         coop.getSocios().forEach(s -> {
@@ -139,15 +139,15 @@ public class App {
         // 1) Cuentas con saldo > 500.000
         var ricas = coop.getSocios().stream()
                 .flatMap(s -> s.getCuentas().stream())
-                .filter(c -> c.getSaldo() > 500_000)
-                .sorted(Comparator.comparingDouble(Cuenta::getSaldo).reversed())
-                .collect(Collectors.toList());
+                .filter(c -> c.getSaldo() > 500_000)  //Filtramos las cuentas mayores a 500.000 - Operación intermedia
+                .sorted(Comparator.comparingDouble(Cuenta::getSaldo).reversed())  //Creamos un comparador que usa como criterio el saldo y .sorted ordena de menor a mayor
+                .collect(Collectors.toList());  //Agregamos ese nuevo orden a lista para impresión
         System.out.println("Cuentas con saldo > 500.000:");
         ricas.forEach(c ->
-                System.out.println(" " + c.getNumeroCuenta() + " -> $" + String.format("%,.2f", c.getSaldo()))
+                System.out.println(" " + c.getNumeroCuenta() + " -> $" + String.format("%,.2f", c.getSaldo())) // operación final forEach para impresión de los datos que cumple condición
         );
 
-        // 2) Total en la cooperativa
+        // 2) Total en la cooperativa con lambda
         double total = coop.getSocios().stream()
                 .flatMap(s -> s.getCuentas().stream())
                 .map(Cuenta::getSaldo)

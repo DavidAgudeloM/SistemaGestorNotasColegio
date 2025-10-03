@@ -3,7 +3,8 @@ package com.cooprkc.transacciones;
 import com.cooprkc.excepciones.SaldoInsuficienteException;
 import com.cooprkc.modelo.Cuenta;
 
-// Retiro, resta saldo con control de insuficiencia.
+// Retiro, resta saldo con control de insuficiencia,
+// Abstracción al implementar
 public class Retiro implements Transaccion {    //Implementación de la interfaz Transacción con la devolución del método ejecutar
     private final double monto;
 

@@ -3,8 +3,9 @@ package com.cooprkc.transacciones;
 import com.cooprkc.modelo.Cuenta;
 
 /** Depósito: suma saldo. */
+
 public class Deposito implements Transaccion {  //Implementación de la interfaz Transacción con la devolución del método ejecutar
-    private final double monto;
+    private final double monto;  // El atributo private final hace que no sea modificable en ningún momento este valor en el constructor
 
     //Método constructor para agregar el monto a la cuenta nueva agregada
     public Deposito(double monto) {
@@ -14,11 +15,13 @@ public class Deposito implements Transaccion {  //Implementación de la interfaz
 
     @Override   // indicamos que sobrescribimos el método de la interface que es pública
     public void ejecutar(Cuenta cuenta) {
+
         cuenta.depositar(monto);
     }
 
     @Override  // indicamos que sobrescribimos el método de la interface que es pública
     public double getMonto() {
+
         return monto;
     }
 }

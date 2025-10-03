@@ -7,6 +7,6 @@ import com.cooprkc.modelo.Cuenta;
 
 public interface Transaccion {
     //Método ejecutar validando que tenga saldo suficiente
-    void ejecutar(Cuenta cuenta) throws SaldoInsuficienteException;
-    double getMonto();  //Método que no recibe parámetros sino que devuelve monto del saldo
+    void ejecutar(Cuenta cuenta) throws SaldoInsuficienteException; 
+    double getMonto();      //Método que no recibe parámetros sino que devuelve monto del saldo
 }
