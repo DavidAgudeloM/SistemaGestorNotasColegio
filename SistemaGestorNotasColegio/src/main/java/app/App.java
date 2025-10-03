@@ -35,11 +35,11 @@ public class App {
                     case 3 -> menuNotas();
                     case 4 -> menuConsultas();
                     case 0 -> System.out.println("Saliendo… ¡Hasta luego!");
-                    default -> System.out.println("⚠️ Opción no válida. Intenta de nuevo.");
+                    default -> System.out.println(" Opción no válida. Intenta de nuevo.");
                 }
             } catch (RuntimeException ex) {
                 // Control centralizado de errores no verificados: el programa no se detiene
-                System.out.println("❌ Ocurrió un error: " + ex.getMessage());
+                System.out.println(" Ocurrió un error: " + ex.getMessage());
             }
             System.out.println();
         } while (opc != 0);
@@ -69,7 +69,7 @@ public class App {
                 case 2 -> listarEstudiantes();
                 case 3 -> buscarEstudiantesPorNombre();
                 case 0 -> {}
-                default -> System.out.println("⚠️ Opción no válida.");
+                default -> System.out.println(" Opción no válida.");
             }
         } while (opc != 0);
     }
@@ -86,7 +86,7 @@ public class App {
                 case 1 -> crearMateria();
                 case 2 -> listarMaterias();
                 case 0 -> {}
-                default -> System.out.println("⚠️ Opción no válida.");
+                default -> System.out.println(" Opción no válida.");
             }
         } while (opc != 0);
     }
@@ -105,7 +105,7 @@ public class App {
                 case 2 -> calcularPromedio();
                 case 3 -> cambiarEstrategiaPromedio();
                 case 0 -> {}
-                default -> System.out.println("⚠️ Opción no válida.");
+                default -> System.out.println(" Opción no válida.");
             }
         } while (opc != 0);
     }
@@ -124,7 +124,7 @@ public class App {
                 case 2 -> reporteEstudiantesConPromedioMinimo();
                 case 3 -> reporteMateriasPorEstudiante();
                 case 0 -> {}
-                default -> System.out.println("⚠️ Opción no válida.");
+                default -> System.out.println(" Opción no válida.");
             }
         } while (opc != 0);
     }
@@ -135,7 +135,7 @@ public class App {
         System.out.print("Nombre: ");
         String nombre = SC.nextLine().trim();
         if (nombre.isBlank()) {
-            System.out.println("⚠️ El nombre no puede estar vacío.");
+            System.out.println(" El nombre no puede estar vacío.");
             return;
         }
         Estudiante est = new Estudiante(nombre);
@@ -174,7 +174,7 @@ public class App {
         }
         Materia m = MateriaFactory.crearMateriaBasica(nombre); // Patrón Factory Method
         Repositorio.getInstance().guardarMateria(m);
-        System.out.println("✅ Materia creada con id " + m.getId());
+        System.out.println(" Materia creada con id " + m.getId());
     }
 
     private static void listarMaterias() {
@@ -191,37 +191,37 @@ public class App {
     private static void registrarNota() {
         var repo = Repositorio.getInstance();
         if (repo.getEstudiantes().isEmpty() || repo.getMaterias().isEmpty()) {
-            System.out.println("⚠️ Debe haber al menos un estudiante y una materia.");
+            System.out.println(" Debe haber al menos un estudiante y una materia.");
             return;
         }
         int idEst = leerEnteroSeguro("Id estudiante: ");
         Estudiante e = repo.buscarEstudiante(idEst).orElse(null);
-        if (e == null) { System.out.println("❌ Estudiante no encontrado."); return; }
+        if (e == null) { System.out.println(" Estudiante no encontrado."); return; }
 
         int idMat = leerEnteroSeguro("Id materia: ");
         Materia m = repo.buscarMateria(idMat).orElse(null);
-        if (m == null) { System.out.println("❌ Materia no encontrada."); return; }
+        if (m == null) { System.out.println(" Materia no encontrada."); return; }
 
         double valor = leerDoubleSeguro("Nota (0.0 a 5.0): ", 0.0, 5.0);
         double peso = leerDoubleSeguro("Peso (0-100, usual 25/30/etc.): ", 0, 100);
 
         // Composición: la materia posee/compone objetos Nota para un estudiante
         e.registrarNota(m, new Nota(valor, peso));
-        System.out.println("✅ Nota registrada.");
+        System.out.println(" Nota registrada.");
     }
 
     private static void calcularPromedio() {
         var repo = Repositorio.getInstance();
         int idEst = leerEnteroSeguro("Id estudiante: ");
         Estudiante e = repo.buscarEstudiante(idEst).orElse(null);
-        if (e == null) { System.out.println("❌ Estudiante no encontrado."); return; }
+        if (e == null) { System.out.println(" Estudiante no encontrado."); return; }
 
         int idMat = leerEnteroSeguro("Id materia: ");
         Materia m = repo.buscarMateria(idMat).orElse(null);
-        if (m == null) { System.out.println("❌ Materia no encontrada."); return; }
+        if (m == null) { System.out.println(" Materia no encontrada."); return; }
 
         double prom = e.calcularPromedio(m); // Strategy aplicada aquí
-        if (Double.isNaN(prom)) System.out.println("⚠️ No hay notas registradas para esa materia.");
+        if (Double.isNaN(prom)) System.out.println(" No hay notas registradas para esa materia.");
         else System.out.printf("Promedio %s de %s: %.2f%n", m.getNombre(), e.getNombre(), prom);
     }
 
@@ -233,23 +233,23 @@ public class App {
             case 1 -> repo.setEstrategiaPromedio(new PromedioSimple());
             case 2 -> repo.setEstrategiaPromedio(new PromedioPonderado());
             default -> {
-                System.out.println("⚠️ Opción inválida");
+                System.out.println(" Opción inválida");
                 return;
             }
         }
-        System.out.println("✅ Estrategia actual: " + repo.getEstrategiaPromedio().nombre());
+        System.out.println(" Estrategia actual: " + repo.getEstrategiaPromedio().nombre());
     }
 
     // ======================== REPORTES (STREAMS) ========================
     private static void reporteTopPromediosPorMateria() {
         var repo = Repositorio.getInstance();
         if (repo.getMaterias().isEmpty() || repo.getEstudiantes().isEmpty()) {
-            System.out.println("⚠️ Faltan estudiantes o materias.");
+            System.out.println(" Faltan estudiantes o materias.");
             return;
         }
         int idMat = leerEnteroSeguro("Id materia: ");
         Materia m = repo.buscarMateria(idMat).orElse(null);
-        if (m == null) { System.out.println("❌ Materia no encontrada."); return; }
+        if (m == null) { System.out.println(" Materia no encontrada."); return; }
         int topN = leerEnteroSeguro("¿Cuántos mostrar (Top N)?: ");
 
         // Stream: mapeamos cada estudiante a su promedio en la materia, filtramos NaN y ordenamos desc
@@ -290,7 +290,7 @@ public class App {
         var repo = Repositorio.getInstance();
         int idEst = leerEnteroSeguro("Id estudiante: ");
         Estudiante e = repo.buscarEstudiante(idEst).orElse(null);
-        if (e == null) { System.out.println("❌ Estudiante no encontrado."); return; }
+        if (e == null) { System.out.println(" Estudiante no encontrado."); return; }
 
         var mats = e.getNotasPorMateria().keySet().stream()
                 .sorted(Comparator.comparing(Materia::getNombre))
@@ -322,11 +322,11 @@ public class App {
                 T value = reader.get();
                 return value;
             } catch (NumberFormatException e) {
-                System.out.println("⚠️ Formato inválido. Intente de nuevo.");
+                System.out.println(" Formato inválido. Intente de nuevo.");
             } catch (IllegalArgumentException e) {
-                System.out.println("⚠️ " + e.getMessage());
+                System.out.println(e.getMessage());
             } catch (Exception e) {
-                System.out.println("❌ Error inesperado: " + e.getMessage());
+                System.out.println(" Error inesperado: " + e.getMessage());
             } finally {
                 // finally: podría usarse para limpiar recursos; aquí dejamos visible su uso
             }
